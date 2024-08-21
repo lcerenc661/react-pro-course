@@ -1,8 +1,8 @@
 import { BrowserRouter, Navigate, NavLink } from "react-router-dom";
 import { Routes, Route, Link } from "react-router-dom";
 import logo from "../logo.svg";
-import { LazyPage1, LazyPage2, LazyPage3 } from "../01-lazyload/pages";
-
+import { routes } from "./routes";
+import { Suspense } from "react";
 
 export const Navigation = () => {
   return (
@@ -11,24 +11,30 @@ export const Navigation = () => {
         <nav>
           <img src={logo} alt="React Logo" />
           <ul>
-            <li>
-              <NavLink to="/lazy1" className={({ isActive }) => (isActive ? "nav-active" : "")}>Lazy Page 1</NavLink>
-            </li>
-            <li>
-              <NavLink to="/lazy2" className={({ isActive }) => (isActive ? "nav-active" : "")}>Lazy Page 2</NavLink>
-            </li>
-            <li>
-              <NavLink to="/lazy3" className={({ isActive }) => (isActive ? "nav-active" : "")}>Lazy Page 3</NavLink>
-            </li>
+            {routes.map(({ to, name, Component, path }) => {
+              return (
+                <li key={to}>
+                  <NavLink
+                    to={to}
+                    className={({ isActive }) => (isActive ? "nav-active" : "")}
+                  >
+                    {name}
+                  </NavLink>
+                </li>
+              );
+            })}
           </ul>
         </nav>
-
-        <Routes>
-          <Route path="lazy1" element={<LazyPage1 />} />
-          <Route path="lazy2" element={<LazyPage2 />} />
-          <Route path="lazy3" element={<LazyPage3 />} />
-          <Route path="/*" element={<Navigate to="lazy1" replace />} />
-        </Routes>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            {routes.map(({ Component, path }, i) => {
+              return (
+                <Route key={path + i} path={path} element={<Component />} />
+              );
+            })}
+            <Route path="/*" element={<Navigate to="lazy1" replace />} />
+          </Routes>
+        </Suspense>
       </div>
     </BrowserRouter>
   );
