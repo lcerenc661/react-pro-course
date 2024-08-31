@@ -1,6 +1,6 @@
 import { lazy } from "react";
 import NoLazy from "../01-lazyload/pages/NoLazy";
-import ShoppingPage from "../02-component-patterns/componets/ShoppingPage";
+import ShoppingPage from "../02-component-patterns/components/ShoppingPage";
 
 // import { LazyPage1,LazyPage2, LazyPage3 } from "../01-lazyload/pages";
 
