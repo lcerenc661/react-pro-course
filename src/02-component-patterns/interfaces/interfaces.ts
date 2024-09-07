@@ -26,3 +26,12 @@ export interface ProductCardProps {
   Image: (Props: ProductImageProps) => JSX.Element;
   Buttons: (Props: ProductButtonsComponentProps) => JSX.Element;
 }
+
+export interface onChangeProps {
+  product: Product;
+  count: number;
+}
+
+export interface ProductInCart extends Product {
+  count: number;
+}
