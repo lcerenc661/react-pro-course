@@ -13,41 +13,41 @@ const useShoppingCart = () => {
     count: number;
     product: Product;
   }) => {
-    setShoppingCart((oldShoppingCart) => {
-      const productInCart: ProductInCart = shoppingCart[product.id] || {
-        ...product,
-        count: 0,
-      };
+    // setShoppingCart((oldShoppingCart) => {
+    //   const productInCart: ProductInCart = shoppingCart[product.id] || {
+    //     ...product,
+    //     count: 0,
+    //   };
 
-      if (Math.max(productInCart.count + count, 0) > 0) {
-        productInCart.count += count;
-        return {
-          ...oldShoppingCart,
-          [product.id]: productInCart,
-        };
-      }
+    //   if (Math.max(productInCart.count + count, 0) > 0) {
+    //     productInCart.count += count;
+    //     return {
+    //       ...oldShoppingCart,
+    //       [product.id]: productInCart,
+    //     };
+    //   }
 
-      // Delete product
+    //   // Delete product
 
-      const { [product.id]: toDelete, ...rest } = oldShoppingCart;
-      return { ...rest };
-    });
+    //   const { [product.id]: toDelete, ...rest } = oldShoppingCart;
+    //   return { ...rest };
+    // });
 
     // =======>>>> BEST AND FIRST IMPLEMENTATION
 
-    // if (count === 0) {
-    //   const { [product.id]: toDelete, ...rest } = shoppingCart;
-    //   console.log(rest);
-    //   setShoppingCart(rest);
-    //   return;
-    // }
+    if (count === 0) {
+      const { [product.id]: toDelete, ...rest } = shoppingCart;
+      console.log(rest);
+      setShoppingCart(rest);
+      return;
+    }
 
-    // setShoppingCart((oldShoppingCart) => {
-    //   return {
-    //     ...oldShoppingCart,
-    //     [product.id]: { ...product, count },
-    //   };
-    // });
+    setShoppingCart((oldShoppingCart) => {
+      return {
+        ...oldShoppingCart,
+        [product.id]: { ...product, count },
+      };
+    });
   };
 
   return {shoppingCart, onProductCountChange};
